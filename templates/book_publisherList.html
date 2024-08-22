@@ -1,0 +1,40 @@
+{# 开始实现我们的继承主页 #}
+{% extends 'home.html' %}
+
+{# 实现我们的自定义区域的显示 #}
+{% block content %}
+	{# 开始实现我们的自定义内容的显示 #}
+    <h1 class="text-center">出版社信息</h1>
+    {# 开始实现我们的具体的表格展示功能 #}
+    <a href="{% url 'publisher_add' %}" class="btn btn-success btn-sm pull-right">新增出版社</a>
+    <table class="table table-hover table-striped">
+        <thead class="text-center">
+            <tr>
+                <th>Publisher_id(出版社标签)</th>
+                <th>Publisher_name(出版社名称)</th>
+                <th>Publisher_address(出版社地址)</th>
+                <th>Publisher_email(出版社邮箱)</th>
+                <th>Publisher_play(出版社操作)</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <!--开始使用我们的模板语法来实现循环遍历我们的图书-->
+            {% for publisher_data in publisher_datas %}
+                <tr>
+                    <td>{{ publisher_data.pk }}</td>
+                    <td>{{ publisher_data.publisher_name }}</td>
+                    <td>{{ publisher_data.publisher_address }}</td>
+                    <!-- 通过我们的过滤器来实习那改变我们的日期展示模式 -->
+                    <th>{{ publisher_data.publisher_email }}</th>
+                    <td>
+                        <a href="{% url 'book_publisherList_edit' publisher_data.pk %}" 
+                           class="btn btn-primary btn-xs">编辑</a>
+                        <a href="{% url 'book_publisherList_delete' publisher_data.pk %}" 
+                           class="btn btn-danger btn-xs">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

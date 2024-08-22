@@ -1,0 +1,50 @@
+<!-- 开始我们的模板继承来实现我们的页面的书写 -->
+{% extends 'home.html' %}
+
+<!-- 开始我们的重写我们的模板的区域 -->
+{% block content %}
+<!--开始i实现重写我们的这个部分的区域-->
+<!--就是我们的图书展示内容-->
+<!--就是实现的先实现获取我们的图书然后实现的就是展示在我们的页面上面来-->
+<!--但是我们这里的话,如果说你是一个那个纯前端人员,那么你是可以使用基本的那个mock.js的技术的-->
+<!--如果说你是一个那个全栈爷,那么也是可以自己创建数据库来实现基本的获得数据的-->
+<!--在这里实现一个添加图书的按钮-->
+<h1 class="text-center">图书信息</h1>
+<a href="{% url 'book_add' %}" class="btn btn-success btn-sm pull-right">添加图书</a>
+    <table class="table table-hover table-striped">
+        <thead class="text-center">
+            <tr>
+                <th>book_id(图书标签)</th>
+                <th>book_title(图书标题)</th>
+                <th>book_author(图书作者)</th>
+                <th>book_price(图书价格)</th>
+                <th>book_publish_time(图书出版时间)</th>
+                <th>book_publisher(图书出版社)</th>
+                <th>book_play(图书操作)</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <!--开始使用我们的模板语法来实现循环遍历我们的图书-->
+            {% for book_data in book_queryset %}
+                <tr>
+                    <td>{{ book_data.pk }}</td>
+                    <td>{{ book_data.book_title }}</td>
+                    <td>
+                        {% for author in book_data.book_author.all %}
+                            {{ author.author_name }}
+                        {% endfor %}
+                    </td>
+                    <td>{{ book_data.book_price }}</td>
+                    <!-- 通过我们的过滤器来实习那改变我们的日期展示模式 -->
+                    <td>{{ book_data.book_publish_date|date:'Y-m-d' }}</td>
+                    <td>{{ book_data.book_publisher.publisher_name }}</td>
+                    <td>
+                        <a href="{% url 'book_edit' book_data.pk %}" class="btn btn-primary btn-xs">编辑</a>
+                        <a href="{% url 'book_delete' book_data.pk %}" class="btn btn-danger btn-xs">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

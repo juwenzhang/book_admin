@@ -1,0 +1,36 @@
+<!-- 开始实现我们的继承主页 -->
+{% extends 'home.html' %}
+
+<!-- 开始实现我们的自定义内容 -->
+{% block content %}
+<h1 class="text-center">书籍添加</h1>
+<form action="" method="post" enctype="multipart/form-data">
+    <p>书名: 
+        <input type="text" name="book_title" class="form-control" placeholder="书名">
+    </p>
+    <p>书的价格: 
+        <input type="text" name="book_price" class="form-control" placeholder="书的价格">
+    </p>
+    <p>出版时间: 
+        <input type="date" name="book_publish_date" class="form-control" placeholder="出版时间">
+    </p>
+    <p>出版社:
+        <!-- 先实现获取我们的当前的出版社含有那些,然后再实现供用户实现选择,单选 -->
+        {% for publisher_data in publisher_datas %}
+        <input type="radio" name="book_publisher" value="{{ publisher_data.pk }}"/>
+        {{ publisher_data.publisher_name }}
+        {% endfor %}
+    </p>
+    <p>作者:
+        <!-- 先实现我们的在数据库中的作者含有那些,然后在实现我们的提供用户选择,多选 -->
+        {% for author_data in author_datas %}
+        <input type="checkbox" name="book_author" value="{{ author_data.pk }}">
+        {{ author_data.author_name }}
+        {% endfor %}
+    </p>
+    <p>
+        <!-- 开始实现提交 -->
+        <input type="submit" class="btn btn-group-justified btn-success" value="添加">
+    </p>
+</form>
+{% endblock %}

@@ -1,0 +1,24 @@
+<!-- 开始实现我们的继承主页 -->
+{% extends 'home.html' %}
+
+<!-- 开始实现我们的自定义内容 -->
+{% block content %}
+<h1 class="text-center">书籍添加</h1>
+<form action="" method="post" enctype="multipart/form-data">
+    <p>出版社名称: 
+        <input type="text" name="publisher_name" class="form-control" 
+               placeholder="出版社名称">
+    </p>
+    <p>出版社地址: 
+        <input type="text" name="publisher_address" class="form-control" 
+               placeholder="出版社地址">
+    </p>
+    <p>出版社邮箱: 
+        <input type="email" name="publisher_email" class="form-control" 
+               placeholder="出版社邮箱">
+    </p>
+    <p>
+        <input type="submit" class="btn btn-group-justified btn-success" value="新增">
+    </p>
+</form>
+{% endblock %}

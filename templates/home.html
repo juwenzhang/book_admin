@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--  开始导入静态资源  -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'jquery_3.6.0.js' %}"></script>
+</head>
+<body>
+<nav class="navbar navbar-primary">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Brand</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <!-- 一共的是12份 -->
+        <div class="col-lg-2">
+             <div class="list-group">
+                <a href="{% url 'home' %}" class="list-group-item active">
+                    首页
+                </a>
+                <!-- 开始修改地址,通过我们的反向解析来实现的 -->
+                <a href="{% url 'book_list' %}" class="list-group-item">图书列表</a>
+                <a href="{% url 'book_publisherList' %}" class="list-group-item">出版社列表</a>
+                <a href="{% url 'book_authorList' %}" class="list-group-item">作者列表</a>
+            </div>
+        </div>                  
+        <div class="col-lg-10">
+            <!-- 巨幕的显示效果 -->
+            <div class="panel panel-primary">
+                <div class="panel-heading">图书管理系统</div>
+                  <div class="panel-body">
+                    <!-- 开始实现我们的模板继承 -->
+                    {% block content %}
+                        <!-- 缩略图显示效果 -->
+                        <div class="row">
+                          <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                              <img src="{% static 'images/01.jpg' %}" alt="...">
+                              <div class="caption">
+                                <h3>Thumbnail label</h3>
+                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                              <img src="{% static 'images/02.jpg' %}" alt="...">
+                              <div class="caption">
+                                <h3>Thumbnail label</h3>
+                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                              <img src="{% static 'images/03.jpg' %}" alt="...">
+                              <div class="caption">
+                                <h3>Thumbnail label</h3>
+                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    {% endblock %}
+                  </div>
+            </div>
+
+        </div>
+     </div>
+</div>
+</body>
+</html>

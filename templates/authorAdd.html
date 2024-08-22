@@ -1,0 +1,38 @@
+{# 开始实现我们的模板继承 #}
+{% extends 'home.html' %}
+
+{# 开始我们的自定义模板的书写 #}
+{% block content %}
+	<h1 class="text-center">图书添加界面</h1>
+    {# 开始我们的form表单的书写 #}
+    <form action="" method="post" enctype="multipart/form-data">
+        <p>
+            作者名称:
+            <input type="text" name="author_name" placeholder="请输入作者名"
+                   class="form-control">
+        </p>
+        <p>
+            作者年纪:
+            <input type="number" name="author_age" placeholder="请输入作者年纪"
+                   class="form-control">
+        </p>
+        <p>
+            作者地址:
+            <input type="text" name="author_address" placeholder="请输入作者地址"
+                   class="form-control">
+        </p>
+        <p>
+            作者邮箱:
+            <input type="email" name="author_email" placeholder="请输入作者邮箱"
+                   class="form-control">
+        </p>
+        <p>
+            作者电话:
+            <input type="tel" name="author_phone" placeholder="请输入作者电话"
+                   class="form-control">
+        </p>
+        <p>
+            <input type="submit" value="提交" class="btn btn-success form-control">
+        </p>
+    </form>
+{% endblock %}

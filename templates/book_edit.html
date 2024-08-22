@@ -1,0 +1,45 @@
+<!-- 开始实现继承模板 -->
+{% extends 'home.html' %}
+
+<!--开始实现书写自定义内容-->
+{% block content %}
+<!--开始书写编辑页面了-->
+<h1 class="text-center">书籍编辑</h1>
+<form action="" method="post" enctype="multipart/form-data">
+    <p>书名: <input type="text" name="book_title"
+                    value="{{ edit_obj.book_title }}" class="form-control"></p>
+    <p>书的价格: <input type="text" name="book_price"
+                        value="{{ edit_obj.book_price }}" class="form-control"></p>
+    <p>出版时间: <input type="date" name="book_publish_date"
+                        value="{{ edit_obj.book_publish_date|date:'Y-m-d' }}" class="form-control"></p>
+    <p>出版社:
+        <!-- 先实现获取我们的当前的出版社含有那些,然后再实现供用户实现选择,单选 -->
+        {% for publisher_data in publisher_datas %}
+            {% if publish_data == edit.obj.book_publisher %}
+                <input type="radio" name="book_publisher" value="{{ publisher_data.pk }}" checked/>
+                {{ publisher_data.publisher_name }}
+            {% else %}
+                <input type="radio" name="book_publisher" value="{{ publisher_data.pk }}"/>
+                {{ publisher_data.publisher_name }}
+            {% endif %}
+        {% endfor %}
+    </p>
+
+    <p>作者:
+        <!-- 先实现我们的在数据库中的作者含有那些,然后在实现我们的提供用户选择,多选 -->
+        {% for author_data in author_datas %}
+            {% if author_data in edit_obj.book_author %}
+                <input type="checkbox" name="book_author" value="{{ author_data.pk }}" checked>
+                {{ author_data.author_name }}
+            {% else %}
+                <input type="checkbox" name="book_author" value="{{ author_data.pk }}">
+                {{ author_data.author_name }}
+            {% endif %}
+        {% endfor %}
+    </p>
+    <p>
+        <!-- 开始实现提交 -->
+        <input type="submit" class="btn btn-group-justified btn-success" value="编辑添加">
+    </p>
+</form>
+{% endblock %}

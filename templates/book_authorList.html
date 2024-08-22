@@ -1,0 +1,38 @@
+{# 开始实现我们的模板继承 #}
+{% extends 'home.html' %}
+
+{# 开始我们的自定义模板的部分的内容的书写 #}
+{% block content %}
+    {# 开始我们的自定义模板	#}
+    <h1 class="text-center">作者信息</h1>
+    <a href="{% url 'boo_authorAdd' %}" class="btn-success btn pull-right">添加作者</a>
+    <table class="table table-hover table-striped">
+        <thead class="text-center">
+            <tr>
+                <th>author_id(作者编号)</th>
+                <th>author_name(作者姓名)</th>
+                <th>author_age(作者年纪)</th>
+                <th>author_detail(作者详情)</th>
+                <th>author_play(操作)</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <!--开始使用我们的模板语法来实现循环遍历我们的图书-->
+            {% for author_data in authorDatas %}
+                <tr>
+                    <td>{{ author_data.pk }}</td>
+                    <td>{{ author_data.author_name }}</td>
+                    <td>{{ author_data.author_age }}</td>
+                    <td>
+                        <a href="" class="btn btn-success btn-xs">查看详情</a>
+                    </td>
+                    <td>
+                        <a href="" class="btn btn-primary btn-xs">编辑</a>
+                        <a href="" class="btn btn-danger btn-xs">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
