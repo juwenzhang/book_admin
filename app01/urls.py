@@ -19,7 +19,7 @@ urlpatterns = [
     path("book/author_list/", views.authorList, name='book_authorList'),
 
     # 作者的添加列表
-    path("book/author_add/", views.authorAdd, name='boo_authorAdd'),
+    path("book/author_add/", views.authorAdd, name='book_authorAdd'),
 
     # 开始实现我们的编辑页面的实现
     re_path("book/edit/(?P<edit_id>\d+)/", views.book_edit, name='book_edit'),
@@ -35,8 +35,8 @@ urlpatterns = [
             name='book_publisherList_delete'),
 
     # 作者的删除和编辑的界面的实现——编辑和删除的功能的实现
-    re_path("book/author_list/(?P<edit_id>\d+)/", views.authorEdit, name='author_edit'),
-    re_path("book/author_list/(?P<delete_id>\d+)/", views.authorDelete, name='author_delete'),
+    re_path("book/author_list/edit/(?P<edit_id>\d+)/", views.authorEdit, name='author_edit'),
+    re_path("book/author_list/delete/(?P<delete_id>\d+)/", views.authorDelete, name='author_delete'),
 
     re_path('^$', views.home, name='home'),
 ]

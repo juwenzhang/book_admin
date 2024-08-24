@@ -3,19 +3,19 @@ from app01 import models
 
 # Create your views here.
 # 开始书写我们的基本的页面设计
-def home(request):
+def home(request) -> HttpResponse:
     return render(request, "home.html")
 
-# 开始我们的图书的视图函数==========================================
+# ============================图书信息操作===============================
 # 开始我们的图书的展示的视图函数、
-def book_list(request):
+def book_list(request) -> HttpResponse:
     # 开始实现我们的获取图书的所有的数据,然后实现的就是在前端页面中实现基本的渲染
     book_queryset = models.Book.objects.all()
     return render(request, "book_list.html", locals())
 
 
 # 开始实现我们的添加我们书籍的操作界面
-def book_add(request):
+def book_add(request) -> HttpResponse:
     # 开始实现我们的添加书籍的操作
 
     # 开始实现我们的获取我们的数据库中含有那些作者信息和出版社信息
@@ -45,7 +45,7 @@ def book_add(request):
 
 
 # 开始书写我们的编辑的视图函数
-def book_edit(request, edit_id):
+def book_edit(request, edit_id) -> HttpResponse:
     publisher_datas = models.Publisher.objects.all()
     author_datas = models.Author.objects.all()
     # 实现获取我们的删除的书的id值
@@ -73,7 +73,7 @@ def book_edit(request, edit_id):
 
 
 # 开始我们的书籍的删除的视图函数
-def book_delete(request, delete_id):
+def book_delete(request, delete_id) -> HttpResponse:
     # 开始实现获取我们的数据库中的信息来实现我们的删除数据的界面
     models.Book.objects.filter(pk=delete_id).delete()
     # 需要实现基本的一些那个删除的提示框的还是可以使用的哈，这个也是一个思路
@@ -81,15 +81,15 @@ def book_delete(request, delete_id):
     return redirect("book_list")
 
 
-# 开始我们的出版社的视图函数==============================================
+# =============================出版社操作===============================
 # 开始实现我们的出版社列表展示
-def book_publisherList(request):
+def book_publisherList(request) -> HttpResponse:
     # 开始实现获取我们的所有的出版社的数据
     publisher_datas = models.Publisher.objects.all()
     return render(request, "book_publisherList.html", locals())
 
 # 出版社添加的视图函数
-def publisher_add(request):
+def publisher_add(request) -> HttpResponse:
     # 开始实现我们的获取数据
     if request.method == "POST":
         # 先实现我们的获取数据
@@ -108,7 +108,7 @@ def publisher_add(request):
     return render(request, "book_publisherAdd.html", locals())
 
 # 出版社编辑函数
-def book_publisherList_edit(request, edit_id):
+def book_publisherList_edit(request, edit_id) -> HttpResponse:
     # 开始实现我们的获取需要实现修改的出版社信息
     publisher_data = models.Publisher.objects.filter(pk=edit_id).first()
     if request.method == "POST":
@@ -130,27 +130,52 @@ def book_publisherList_edit(request, edit_id):
     return render(request, "book_publisherList_edit.html", locals())
 
 # 出版社删除函数
-def book_publisherList_delete(request, delete_id):
+def book_publisherList_delete(request, delete_id) -> HttpResponse:
     models.Publisher.objects.filter(pk=delete_id).delete()
     return redirect("book_publisherList_delete")
 
-
+#===============================作者的操作===================================
 # 开始我们的作者的视图函数
-def authorList(request):
+def authorList(request) -> HttpResponse:
     # 开始获取我们的视图数据
     authorDatas = models.Author.objects.all()
     return render(request, 'book_authorList.html', locals())
 
 # 开始我们的作者的编辑视图
-def authorEdit(request, edit_id):
+def authorEdit(request, edit_id) -> HttpResponse:
+    # 先实现我们的获取我们的对象的本身
+    edit_obj = models.Author.objects.filter(pk=edit_id).first()
+    if request.method == "POST":
+        # 开始实现我们的获取前端的form表单传入的数据
+        author_name = request.POST.get("author_name")
+        author_age = request.POST.get("author_age")
+        author_address = request.POST.get("author_address")
+        author_email = request.POST.get("author_email")
+        author_phone = int(request.POST.get("author_phone"))
+
+        # 开始实现我们的数据的更新，但是我们实现的修改是实现的是我们的修改两个表的数据
+        edit_obj.author_name = author_name
+        edit_obj.author_age = author_age
+        edit_obj.author_detail.author_address = author_address
+        edit_obj.author_detail.author_email = author_email
+        edit_obj.author_detail.author_phone = author_phone
+        # 通过这种办法来实现的修改我们需要实现的是我们的保存的操作
+        # 但是直接通过我们的update的方法来实现的就是自动保存
+        edit_obj.save()
+        edit_obj.author_detail.save()
+
+        # 最后实现我们的重定向页面
+        return redirect("book_authorList")
     return render(request, "author_edit.html", locals())
 
-def authorDelete(request, delete_id):
+def authorDelete(request, delete_id) -> HttpResponse:
     # 直接实现我们的删除
-    models.Author.objects.filter(pk=delete_id).delete()
-    return redirect("author_list")
+    author_obj = models.Author.objects.filter(pk=delete_id).first()
+    author_obj.author_detail.delete()
+    author_obj.delete()
+    return redirect("book_authorList")
 
-def authorAdd(request):
+def authorAdd(request) -> HttpResponse:
     # 开始实现我们的的获取数据
     if request.method == "POST":
         # 开始实现我们的获取前端传入的数据
@@ -175,4 +200,3 @@ def authorAdd(request):
         )
         return redirect("book_authorList")
     return render(request, 'authorAdd.html', locals())
-
