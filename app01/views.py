@@ -131,7 +131,8 @@ def book_publisherList_edit(request, edit_id):
 
 # 出版社删除函数
 def book_publisherList_delete(request, delete_id):
-    return render(request, "book_publisherList_delete.html", locals())
+    models.Publisher.objects.filter(pk=delete_id).delete()
+    return redirect("book_publisherList_delete")
 
 
 # 开始我们的作者的视图函数
@@ -140,29 +141,38 @@ def authorList(request):
     authorDatas = models.Author.objects.all()
     return render(request, 'book_authorList.html', locals())
 
+# 开始我们的作者的编辑视图
+def authorEdit(request, edit_id):
+    return render(request, "author_edit.html", locals())
+
+def authorDelete(request, delete_id):
+    # 直接实现我们的删除
+    models.Author.objects.filter(pk=delete_id).delete()
+    return redirect("author_list")
+
 def authorAdd(request):
     # 开始实现我们的的获取数据
     if request.method == "POST":
+        # 开始实现我们的获取前端传入的数据
         author_name = request.POST.get("author_name")
         author_age = request.POST.get("author_age")
         author_address = request.POST.get("author_address")
         author_email = request.POST.get("author_email")
-        author_phone = request.POST.get("author_phone")
-
-        # 先实现添加我们的作者的具体信息表名的数据
-        models.Author_detailInfo.objects.create(
+        author_phone = int(request.POST.get("author_phone"))
+        # 我们必须先实现的是先操作我们的作者详情，然后才可以实现我们的添加作者的数据
+        # 开始实现我们的额添加作者的详情的信息
+        author_detail_obj = models.Author_detailInfo.objects.create(
+            author_phone=author_phone,
             author_address=author_address,
-            author_email=author_email,
-            author_phone=author_phone
+            author_email=author_email
         )
-        # 开始实现我们的数据库的更新
+        # 开始我们的创建我们的作者的信息，并且加入我们的数据库
         models.Author.objects.create(
             author_name=author_name,
             author_age=author_age,
-            author_detail_id=models.Author.objects.all().last().pk
+            # 通过我们的作者详情来实现我们的添加一对一的作者详情信息
+            author_detail=author_detail_obj,
         )
         return redirect("book_authorList")
     return render(request, 'authorAdd.html', locals())
 
-def author_detail(request, detail_id):
-    pass

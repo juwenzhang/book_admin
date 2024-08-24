@@ -36,7 +36,7 @@ class Author(models.Model):
     author_age = models.IntegerField()
 
     # 作者和作者详情市一对一的关系
-    author_detail = models.OneToOneField(to="Author", on_delete=models.CASCADE)
+    author_detail = models.OneToOneField(to="Author_detailInfo", on_delete=models.CASCADE)
 
 
 # 作者详情表

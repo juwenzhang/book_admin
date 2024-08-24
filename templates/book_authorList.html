@@ -12,7 +12,9 @@
                 <th>author_id(作者编号)</th>
                 <th>author_name(作者姓名)</th>
                 <th>author_age(作者年纪)</th>
-                <th>author_detail(作者详情)</th>
+                <th>author_address(作者地址)</th>
+                <th>author_email(作者邮箱)</th>
+                <th>author_phone(作者联系电话)</th>
                 <th>author_play(操作)</th>
             </tr>
         </thead>
@@ -24,12 +26,14 @@
                     <td>{{ author_data.pk }}</td>
                     <td>{{ author_data.author_name }}</td>
                     <td>{{ author_data.author_age }}</td>
+                    <td>{{ author_data.author_detail.author_address }}</td>
+                    <td>{{ author_data.author_detail.author_email }}</td>
+                    <td>{{ author_data.author_detail.author_phone }}</td>
                     <td>
-                        <a href="" class="btn btn-success btn-xs">查看详情</a>
-                    </td>
-                    <td>
-                        <a href="" class="btn btn-primary btn-xs">编辑</a>
-                        <a href="" class="btn btn-danger btn-xs">删除</a>
+                        <a href="{% url 'author_edit' author_data.pk %}" 
+                           class="btn btn-primary btn-xs">编辑</a>
+                        <a href="{% url 'author_delete' author_data.pk %}" 
+                           class="btn btn-danger btn-xs">删除</a>
                     </td>
                 </tr>
             {% endfor %}

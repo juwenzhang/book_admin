@@ -31,13 +31,12 @@ urlpatterns = [
     re_path("book/publisher_list/(?P<edit_id>\d+)/", views.book_publisherList_edit,
             name='book_publisherList_edit'),
 
-    re_path("book/publisher_list(?P<delete_id>\d+)/", views.book_publisherList_delete,
+    re_path("book/publisher_list/(?P<delete_id>\d+)/", views.book_publisherList_delete,
             name='book_publisherList_delete'),
 
-    re_path("book/author_detail/(?P<detail_id>\d+)/", views.author_detail,
-            name='book_author_detail'),
-
     # 作者的删除和编辑的界面的实现——编辑和删除的功能的实现
+    re_path("book/author_list/(?P<edit_id>\d+)/", views.authorEdit, name='author_edit'),
+    re_path("book/author_list/(?P<delete_id>\d+)/", views.authorDelete, name='author_delete'),
 
     re_path('^$', views.home, name='home'),
 ]
